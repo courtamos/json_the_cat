@@ -5,19 +5,18 @@ const fetchBreedDescription = function(breedName, callback) {
 
   request(url, (error, _response, body) => {  // '_' infront of response beacuse request requires the set parameters, this denotes that it's not being used in the actual code
     if (error) { // code to execute if error occurred
-      callback(error);
+      callback(error, null);
       process.exit();
     } else {
       const data = JSON.parse(body); // converting string into an object => deserialization
 
       if (!data.length) { // code to execute if breed not found
-        callback('breed not found');
+        callback('breed not found', null);
         process.exit();
       }
 
       const catDescription = data[0].description; // capturing deescription in a variable
-      callback(null, catDescription); // return the description
-
+      callback(null, catDescription.trim()); // return the description
     }
   });
 };
